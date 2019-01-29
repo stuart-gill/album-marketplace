@@ -24,5 +24,5 @@ export class AlbumService {
   getAlbumById(albumId: string){
     return this.database.object('albums/' + albumId);
   }
-  }
 }
+
