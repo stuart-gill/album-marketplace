@@ -1,3 +1,5 @@
+//this manages the application's relationship with Firebase
+
 import { Injectable } from "@angular/core";
 import { Album } from "./album.model";
 import {
@@ -22,7 +24,17 @@ export class AlbumService {
   }
 
   getAlbumById(albumId: string){
-    return this.database.object('albums/' + albumId);
+    return this.database.object('/albums/' + albumId);
+  }
+
+
+  //this function takes the local version of the Album as an argument-- ie, the live edited one
+  //then it finds the corresponding entry in firebase, and updates it
+  updateAlbum(localUpdatedAlbum){
+    var albumEntryInFirebase = this.getAlbumById(localUpdatedAlbum.$key);
+    albumEntryInFirebase.update({title: localUpdatedAlbum.title,
+                                artist: localUpdatedAlbum.artist,
+                                description: localUpdatedAlbum.description});
   }
 }
 
